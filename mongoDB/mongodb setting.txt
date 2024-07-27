@@ -1,0 +1,27 @@
+mongod --dbpath C:\Users\wowp1\Desktop\git\laptop_repository\InfoTechRoad\TechRoad\db --port 27017
+
+use TechRoad
+db.firstcol.insertOne({a:1})
+
+show collections
+db.collections
+db.collect.drop()
+db.dropDatabase()
+db.enableFreeMonitoring()
+db.createCollection("coll",{capped:true,size:500})
+db.coll.stats()
+db.coll.totalSize()
+for(i=0;i<500;i++){
+db.coll.insertOne({a:i})
+}
+db.coll.find()
+db.stats
+db.getCollectionInfos()
+db.coll.insertMany([{},{},{}])
+db.coll.find({name:"홍길동",age:5})
+db.coll.findOne({age:5})
+db.coll.find({age:5},[_id:0])
+db.coll.find({age:5},[_id:1])
+db.coll.find({etc:{SelemMatch:{"likenum.0":20}}})
+db.coll.find({etc:{SelemMatch:{"likenum.2":20}}})
+db.coll.find({etc:{SelemMatch:{hobby:"육상"}}})
