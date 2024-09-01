@@ -82,5 +82,49 @@ FROM
     ) dp2 
         ON em.departmentId = dp2.id 
 WHERE
-    em.salary = dp2.max_salary
+    em.salary = dp2.max_salary; 
+
+--ChatGPT Correction
+SELECT
+    dp2.name AS Department
+    , em.name AS Employee
+    , em.salary AS Salary 
+FROM
+    Employee em 
+    INNER JOIN ( 
+        SELECT
+            dp.id
+            , dp.name
+            , MAX(em.salary) AS max_salary 
+        FROM
+            Employee em 
+            INNER JOIN Department dp 
+                ON em.departmentId = dp.id 
+        GROUP BY
+            dp.id
+            , dp.name
+    ) dp2 
+        ON em.departmentId = dp2.id 
+        AND em.salary = dp2.max_salary; 
+
+-- others code
+--1
+select
+    Department
+    , Employee
+    , salary 
+from
+    ( 
+        select
+            d.name as Department
+            , e.name as Employee
+            , e.salary
+            , dense_rank() over (partition by d.id order by e.salary desc) as rnk 
+        from
+            Employee as e 
+            left outer join Department as d 
+                on e.departmentid = d.id
+    ) as t 
+where
+    t.rnk = 1
 
